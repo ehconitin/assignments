@@ -45,5 +45,65 @@
   const app = express();
   
   app.use(bodyParser.json());
+
+  var id = 0;
+
+  var todo = [];
+
+  app.get("/todos", function(req,res){
+    res.json({todo})
+  })
+
+  app.get("/todos/:id",function(req,res){
+    const idIndex = parseInt(req.params.id, 10)
+    if(idIndex<todo.length){
+      res.json(todo[idIndex]);
+
+    }else{
+      res.status(404).send("Not Found")
+    }
+    
+  })
+
+  app.post("/todos", function(req,res){
+    const title = req.body.title;
+    const description = req.body.description;
+    var newId = todo.length;
+    
+    todo[newId] = {
+      "id": id,
+      "title": title,
+      "description": description
+    }
+    res.json({
+      "id": id++
+    })
+    
+  })
+
+  app.put("/todos/:id", function(req,res){
+    const idIndex = parseInt(req.params.id,10);
+    const title = req.body.title;
+    const description = req.body.description;
+    if(idIndex<todo.length){
+      todo[idIndex].title = title;
+      todo[idIndex].description = description;
+      res.send("id "+idIndex+" updated")
+    }else{
+      res.status(404).send("Not Found")
+    }
+  })
+
+  app.delete("/todos/:id", function(req,res){
+    const idIndex = parseInt(req.params.id,10);
+    if(idIndex<todo.length){
+      todo.splice(idIndex,1);
+      res.send("id "+idIndex+" deleted")
+    }else{
+      res.status(404).send("Not Found")
+    }
+  })
   
+
+  app.listen(4000);
   module.exports = app;
