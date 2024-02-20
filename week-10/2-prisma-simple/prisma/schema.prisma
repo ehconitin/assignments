@@ -7,7 +7,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = "postgres://postgres:mysecretpassword@localhost/postgres"
+  url      = "postgresql://nitinkoche03:taXK9HCSYb1E@ep-frosty-unit-a5ygspp5.us-east-2.aws.neon.tech/prisma-assignment-test?sslmode=require"
 }
 
 model User {
